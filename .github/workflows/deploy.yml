@@ -1,35 +1,37 @@
 name: Deploy WebClients
+
 on:
-push:
-branches:
-- main
-workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
-deploy:
-runs-on: ubuntu-latest
-steps:
-- name: Deploy on Ubuntu server
-uses: appleboy/ssh-action@v1.2.0
-with:
-host: ${{ secrets.SSH_HOST }}
-username: ${{ secrets.SSH_USER }}
-key: ${{ secrets.SSH_PRIVATE_KEY }}
-port: ${{ secrets.SSH_PORT }}
-script: |
-set -e
-echo "Debut du deploiement"
-cd /var/www/clients/WebClients
-echo "Mise a jour du code..."
-git pull origin main
-echo "Installation des dependances..."
-/home/etudiant/.bun/bin/bun ci
-echo "Compilation Astro..."
-/home/etudiant/.bun/bin/bun run --bun build
-echo "Redemarrage de l'application..."
-sudo systemctl restart clients
-echo "Verification du service..."
-sudo systemctl status clients
-echo "Health check..."
-sleep 3
-curl --fail http://localhost:3300/
-echo "Deploiement termine"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy on Ubuntu server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -e
+            echo "Debut du deploiement"
+            cd /var/www/clients/WebClients
+            echo "Mise a jour du code..."
+            git pull origin main
+            echo "Installation des dependances..."
+            /home/etudiant/.bun/bin/bun install
+            echo "Compilation Astro..."
+            /home/etudiant/.bun/bin/bun run --bun build
+            echo "Redemarrage de l'application..."
+            sudo systemctl restart clients
+            echo "Verification du service..."
+            sudo systemctl status clients --no-pager
+            echo "Health check..."
+            sleep 3
+            curl --fail http://localhost:3300/
+            echo "Deploiement termine"
