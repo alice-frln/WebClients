@@ -14,7 +14,7 @@ export default defineConfig({
     allowedDomains: [
       {
         protocol: "https",
-        hostname: "clients.geiss-solene.fr"
+        hostname: "clients.alice-frelin.fr"
       }
     ]
   }
