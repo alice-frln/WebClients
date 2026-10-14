@@ -1,0 +1,64 @@
+---
+// src/pages/login.astro
+import SignIn from '../../node_modules/auth-astro/src/components/SignIn.astro';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion | Clients</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f7fb;
+        color: #172033;
+      }
+
+      .login-card {
+        width: 100%;
+        max-width: 380px;
+        padding: 32px 28px;
+        background: #ffffff;
+        border: 1px solid #e7ebf2;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(23, 32, 51, 0.08);
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0 0 24px;
+        font-size: 24px;
+      }
+
+      .login-card :global(button) {
+        width: 100%;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 10px;
+        background: #4f46e5;
+        color: #ffffff;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .login-card :global(button:hover) {
+        background: #4338ca;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <h1>Connexion</h1>
+      <SignIn provider="google">
+        Se connecter avec Google
+      </SignIn>
+    </div>
+  </body>
+</html>

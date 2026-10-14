@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 const dbPath = resolve(
   import.meta.env.SQLITE_DB_PATH || "./data/clients.db"
 );
+console.log("DB utilisée :", dbPath);
 mkdirSync(dirname(dbPath), { recursive: true });
 
 const db = new DatabaseSync(dbPath);
